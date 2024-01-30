@@ -1,0 +1,8 @@
+{
+  "generator-jhipster:7.9.4": {
+    "promptValues": {
+      "packageName": "ru.bmstu.rk6",
+      "nativeLanguage": "ru"
+    }
+  }
+}

@@ -1,0 +1,36 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="good">
+      <h2 data-cy="goodDetailsHeading"><span jhiTranslate="jhipsterApplicationApp.good.detail.title">Good</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ good.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="jhipsterApplicationApp.good.amount">Amount</span></dt>
+        <dd>
+          <span>{{ good.amount }}</span>
+        </dd>
+        <dt><span jhiTranslate="jhipsterApplicationApp.good.name">Name</span></dt>
+        <dd>
+          <span>{{ good.name }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Назад</span>
+      </button>
+
+      <button type="button" [routerLink]="['/good', good.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Изменить</span>
+      </button>
+    </div>
+  </div>
+</div>

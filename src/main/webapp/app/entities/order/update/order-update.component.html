@@ -1,0 +1,146 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate [formGroup]="editForm">
+      <h2 id="jhi-order-heading" data-cy="OrderCreateUpdateHeading" jhiTranslate="jhipsterApplicationApp.order.home.createOrEditLabel">
+        Создать или отредактировать Order
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="jhipsterApplicationApp.order.name" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="jhipsterApplicationApp.order.date" for="field_date">Date</label>
+          <div class="d-flex">
+            <input
+              id="field_date"
+              data-cy="date"
+              type="datetime-local"
+              class="form-control"
+              name="date"
+              formControlName="date"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+      </div>
+
+      <ng-container *ngIf="order">
+        <h2 id="jhi-order-heading" data-cy="OrderCreateUpdateHeading" jhiTranslate="jhipsterApplicationApp.order.goods"></h2>
+
+        <hr />
+
+        <div class="alert alert-warning" id="no-result" *ngIf="goodsInOrder?.length === 0">
+          <span jhiTranslate="jhipsterApplicationApp.good.home.notFound"></span>
+        </div>
+
+        <div class="table-responsive table-entities" id="entities" *ngIf="goodsInOrder && goodsInOrder.length > 0">
+          <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+              <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending">
+                <th scope="col" jhiSortBy="name">
+                  <div class="d-flex">
+                    <span jhiTranslate="jhipsterApplicationApp.goodInOrder.goodInOrderName">Name</span>
+                    <fa-icon class="p-1" icon="sort"></fa-icon>
+                  </div>
+                </th>
+                <th scope="col" jhiSortBy="date">
+                  <div class="d-flex">
+                    <span jhiTranslate="jhipsterApplicationApp.goodInOrder.goodInOrderAmount">Date</span>
+                    <fa-icon class="p-1" icon="sort"></fa-icon>
+                  </div>
+                </th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let goodInOrder of goodsInOrder" data-cy="entityTable">
+                <td>{{ goodInOrder.good_name }}</td>
+                <td>{{ goodInOrder.good_in_order_amount }}</td>
+                <td class="text-end">
+                  <div class="btn-group">
+                    <button
+                      type="submit"
+                      class="btn btn-info btn-sm"
+                      data-cy="entityDetailsButton"
+                      (click)="openInNewTab(goodInOrder.good_id)"
+                      [disabled]="isGoodDeleted(goodInOrder.good_id)"
+                    >
+                      <fa-icon icon="eye"></fa-icon>
+                      <span class="d-none d-md-inline" jhiTranslate="entity.action.view"></span>
+                    </button>
+                    <button
+                      type="submit"
+                      class="btn btn-danger btn-sm"
+                      data-cy="entityDetailsButton"
+                      (click)="markGoodDeleted(goodInOrder)"
+                      [disabled]="isGoodDeleted(goodInOrder.good_id)"
+                    >
+                      <fa-icon icon="times"></fa-icon>
+                      <span class="d-none d-md-inline" jhiTranslate="entity.action.delete"></span>
+                    </button>
+                    <button
+                      class="btn btn-primary btn-sm"
+                      (click)="decrementAmount(goodInOrder.good_in_order_id)"
+                      [disabled]="isGoodDeleted(goodInOrder.good_id)"
+                    >
+                      <span class="d-none d-md-inline">—</span>
+                    </button>
+                    <button
+                      class="btn btn-primary btn-sm"
+                      (click)="incrementAmount(goodInOrder.good_in_order_id)"
+                      [disabled]="isGoodDeleted(goodInOrder.good_id)"
+                    >
+                      <fa-icon icon="plus"></fa-icon>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <button *ngIf="order" type="submit" id="add-good" class="btn btn-success" (click)="addGoodToOrder(order)">
+          <fa-icon icon="plus"></fa-icon>&nbsp;<span jhiTranslate="jhipsterApplicationApp.goodInOrder.addGoods"></span>
+        </button>
+
+        <br />
+
+        <hr />
+      </ng-container>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Отмена</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+          (click)="save()"
+        >
+          <ng-container *ngIf="!isSaving">
+            <fa-icon icon="save"></fa-icon>&nbsp;
+            <span jhiTranslate="entity.action.save"></span>
+          </ng-container>
+
+          <div *ngIf="isSaving" class="spinner-border spinner-border-sm text-dark">
+            <span class="visually-hidden">Loading..</span>
+          </div>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

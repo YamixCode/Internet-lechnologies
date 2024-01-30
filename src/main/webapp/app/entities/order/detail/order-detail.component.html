@@ -1,0 +1,96 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8" *ngIf="!isLoading">
+    <div *ngIf="order">
+      <h2 data-cy="orderDetailsHeading"><span jhiTranslate="jhipsterApplicationApp.order.detail.title">Order</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ order.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="jhipsterApplicationApp.order.name">Name</span></dt>
+        <dd>
+          <span>{{ order.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="jhipsterApplicationApp.order.date">Date</span></dt>
+        <dd>
+          <span>{{ order.date | formatMediumDatetime }}</span>
+        </dd>
+      </dl>
+
+      <button type="button" (click)="bringTomorrow()" class="btn btn-primary">
+        <span *ngIf="!isSaving" jhiTranslate="entity.action.bringTomorrow"></span>
+        <div *ngIf="isSaving" class="spinner-border spinner-border-sm text-dark">
+          <span class="visually-hidden">Loading..</span>
+        </div>
+      </button>
+
+      <br />
+      <br />
+
+      <h2 data-cy="orderDetailsHeading"><span jhiTranslate="jhipsterApplicationApp.order.goods"></span></h2>
+
+      <hr />
+
+      <div class="alert alert-warning" id="no-result" *ngIf="goodsInOrder?.length === 0">
+        <span jhiTranslate="jhipsterApplicationApp.good.home.notFound">Orders не найдено</span>
+      </div>
+
+      <div class="table-responsive table-entities" id="entities" *ngIf="goodsInOrder && goodsInOrder.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+          <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending">
+              <th scope="col" jhiSortBy="name">
+                <div class="d-flex">
+                  <span jhiTranslate="jhipsterApplicationApp.goodInOrder.goodInOrderName">Name</span>
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                </div>
+              </th>
+              <th scope="col" jhiSortBy="date">
+                <div class="d-flex">
+                  <span jhiTranslate="jhipsterApplicationApp.goodInOrder.goodInOrderAmount">Date</span>
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                </div>
+              </th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let goodInOrder of goodsInOrder" data-cy="entityTable">
+              <td>{{ goodInOrder.good_name }}</td>
+              <td>{{ goodInOrder.good_in_order_amount }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"></span>
+      </button>
+
+      <button type="button" [routerLink]="['/order', order.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"></span>
+      </button>
+
+      <button type="button" (click)="shipOrder()" class="btn btn-success">
+        <ng-container *ngIf="!isSaving">
+          <fa-icon icon="check"></fa-icon>&nbsp;
+          <span jhiTranslate="entity.action.ship"></span>
+        </ng-container>
+        <div *ngIf="isSaving" class="spinner-border spinner-border-sm text-dark">
+          <span class="visually-hidden">Loading..</span>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="spinner-border spinner-border-sm text-dark">
+    <span class="visually-hidden">Loading..</span>
+  </div>
+</div>

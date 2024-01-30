@@ -1,0 +1,34 @@
+{
+  "jhipsterApplicationApp": {
+    "order": {
+      "home": {
+        "title": "Заказы",
+        "refreshListLabel": "Обновить список",
+        "createLabel": "Создать новый заказ",
+        "createOrEditLabel": "Создать или отредактировать заказ",
+        "notFound": "Заказов не найдено"
+      },
+      "created": "Новый Заказ создан с идентификатором {{ param }}",
+      "updated": "Заказ обновлен с идентификатором {{ param }}",
+      "deleted": "Заказ удален с идентификатором {{ param }}",
+      "delete": {
+        "question": "Вы уверены что хотите удалить заказ {{ id }}?"
+      },
+      "detail": {
+        "title": "Заказ"
+      },
+      "id": "ID",
+      "name": "Имя покупателя",
+      "date": "Дата создания",
+      "goods": "Товары в заказе"
+    },
+    "goodInOrder": {
+      "goodInOrderName": "Имя товара",
+      "goodInOrderAmount": "Количество товара",
+      "addGoods": "Добавить товары",
+      "selectGood": "Выберите товар",
+      "cancelModal": "Отмена",
+      "addGood": "Добавить товар"
+    }
+  }
+}

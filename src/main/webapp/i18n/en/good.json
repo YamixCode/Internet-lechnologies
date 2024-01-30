@@ -1,0 +1,25 @@
+{
+  "jhipsterApplicationApp": {
+    "good": {
+      "home": {
+        "title": "Goods",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Good",
+        "createOrEditLabel": "Create or edit a Good",
+        "notFound": "No Goods found"
+      },
+      "created": "A new Good is created with identifier {{ param }}",
+      "updated": "A Good is updated with identifier {{ param }}",
+      "deleted": "A Good is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Good {{ id }}?"
+      },
+      "detail": {
+        "title": "Good"
+      },
+      "id": "ID",
+      "amount": "Amount",
+      "name": "Name"
+    }
+  }
+}

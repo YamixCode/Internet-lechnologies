@@ -1,0 +1,83 @@
+<div>
+  <div class="modal-header">
+    <h2 id="page-heading" data-cy="GoodHeading">
+      <span jhiTranslate="jhipsterApplicationApp.good.home.title">Goods</span>
+    </h2>
+  </div>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="goods?.length === 0">
+    <span jhiTranslate="jhipsterApplicationApp.good.home.notFound">Goods не найдено</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="goods && goods.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="amount">
+            <div class="d-flex">
+              <span jhiTranslate="jhipsterApplicationApp.good.amount">Amount</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="name">
+            <div class="d-flex">
+              <span jhiTranslate="jhipsterApplicationApp.good.name">Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let good of goods; trackBy: trackId"
+          data-cy="entityTable"
+          id="goodTable"
+          (mouseenter)="setGoodHovered(good)"
+          (click)="setGoodSelected(good)"
+          [ngStyle]="getTrBackgroundColor(good)"
+        >
+          <td>
+            <a [routerLink]="['/good', good.id, 'view']">{{ good.id }}</a>
+          </td>
+          <td>{{ good.amount }}</td>
+          <td>{{ good.name }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+      <fa-icon icon="ban"></fa-icon>
+      <span jhiTranslate="jhipsterApplicationApp.goodInOrder.cancelModal"></span>
+    </button>
+
+    <button
+      type="submit"
+      class="btn btn-secondary btn-success"
+      data-dismiss="modal"
+      (click)="onGoodAdded()"
+      [disabled]="!anyElementSelected"
+    >
+      <ng-container *ngIf="!isAddingInProgress">
+        <fa-icon icon="add"></fa-icon>
+        <span jhiTranslate="jhipsterApplicationApp.goodInOrder.addGood"></span>
+      </ng-container>
+
+      <div *ngIf="isAddingInProgress" class="spinner-border spinner-border-sm text-dark">
+        <span class="visually-hidden">Loading..</span>
+      </div>
+    </button>
+  </div>
+</div>
